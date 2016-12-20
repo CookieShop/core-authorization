@@ -2,7 +2,7 @@
 $path=  realpath((__DIR__).'/../').'/src/';
 
 return [
-    'adteam_core_powerbi'=>[
+    'adteam_core_authorization'=>[
         'test'=>$path
     ],
     'doctrine' => [
@@ -15,7 +15,7 @@ return [
             ],
         ],
         'driver' => [
-            'Doctrine_driver_powerbi' => [
+            'Doctrine_driver_authorization' => [
                 'class' => \Doctrine\ORM\Mapping\Driver\AnnotationDriver::class,
                 'cache' => 'array',
                 'paths' => [
@@ -24,7 +24,7 @@ return [
             ],
             'orm_default' => [
                 'drivers' => [
-                    'Adteam\\Core\\Powerbi' => 'Doctrine_driver_powerbi',
+                    'Adteam\\Core\\Authorization' => 'Doctrine_driver_authorization',
                 ],
             ],
         ],
