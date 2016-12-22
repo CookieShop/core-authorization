@@ -9,17 +9,16 @@
 namespace Adteam\Core\Authorization;
 
 /**
- * Description of Authorization
+ * Description of Corepermissions
  *
  * @author dev
  */
+
 use Zend\ServiceManager\ServiceManager;
 use Doctrine\ORM\EntityManager;
-use Adteam\Core\Authorization\Entity\CoreRoles;
+use Adteam\Core\Authorization\Entity\CorePermissions as EntityCorePermissions;
 
-class Authorization
-{
-    
+class Corepermissions {
     /**
      *
      * @var type 
@@ -32,6 +31,10 @@ class Authorization
      */
     protected $em;
     
+    /**
+     * 
+     * @param ServiceManager $service
+     */
     public function __construct(ServiceManager $service) {
         $this->service = $service;  
         $this->em = $service->get(EntityManager::class); 
@@ -44,7 +47,7 @@ class Authorization
      */
     public function create($data)
     {       
-        return $this->em->getRepository(CoreRoles::class)->create($data);
+        return $this->em->getRepository(EntityCorePermissions::class)->create($data);
     }
     
     /**
@@ -54,7 +57,7 @@ class Authorization
      */
     public function fetch($id)
     {
-        return $this->em->getRepository(CoreRoles::class)->fetch($id); 
+        return $this->em->getRepository(EntityCorePermissions::class)->fetch($id); 
     }
     
     /**
@@ -64,7 +67,7 @@ class Authorization
      */
     public function fetchAll($params)
     {
-        return $this->em->getRepository(CoreRoles::class)->fetchAll($params);
+        return $this->em->getRepository(EntityCorePermissions::class)->fetchAll($params);
     }
     
     /**
@@ -74,7 +77,7 @@ class Authorization
      */
     public function delete($id)
     {
-      return $this->em->getRepository(CoreRoles::class)->delete($id);
+      return $this->em->getRepository(EntityCorePermissions::class)->delete($id);
     }
     
     /**
@@ -85,6 +88,6 @@ class Authorization
      */
     public function update($id, $data)
     {
-        return $this->em->getRepository(CoreRoles::class)->update($id, $data);
-    }    
+        return $this->em->getRepository(EntityCorePermissions::class)->update($id, $data);
+    }  
 }

@@ -28,10 +28,15 @@ class CoreResourcesRepository extends EntityRepository{
         return $this->_em->transactional(
             function ($em) use($data) {
                 $CoreResources = new CoreResources();
-                $CoreResources->setAlias($data['alias']);
-                $CoreResources->setResource($data['resource']);
-                $CoreResources->setMethodhttp($data['methodhttp']);
-                $CoreResources->setDescription($data['description']);
+                $CoreResources->setAlias($data->alias);
+                $CoreResources->setResource($data->resource);
+                $CoreResources->setMethodhttp($data->methodhttp);
+                if(isset($data->description)){
+                    $CoreResources->setDescription($data->description);
+                }else{
+                    $CoreResources->setDescription('');
+                }
+                    
                 $em->persist($CoreResources); 
                 $em->flush();
                 $id = $CoreResources->getId();
@@ -98,10 +103,22 @@ class CoreResourcesRepository extends EntityRepository{
         $currentRepo = $this;
         return $this->_em->transactional(
             function ($em) use($currentRepo,$id, $data) {
-                    $currentRepo->createQueryBuilder('o')
+                    $update = $currentRepo->createQueryBuilder('o')
                     ->update(CoreResources::class,'o')
-                    ->set('o.role',':role')  
-                    ->setParameter('role', $data['role'])
+                    ->set('o.alias',':alias')  
+                    ->setParameter('alias', $data->alias)
+                    ->set('o.resource',':resource')  
+                    ->setParameter('resource', $data->resource)
+                    ->set('o.methodhttp',':methodhttp')  
+                    ->setParameter('methodhttp', $data->methodhttp);
+                    if(isset($data->description)){
+                        $update->set('o.description',':description') 
+                           ->setParameter('description', $data->description);
+                    }else{
+                        $update->set('o.description',':description') 
+                           ->setParameter('description', '');
+                    }                    
+                    $update                       
                     ->where('o.id = :id')
                     ->setParameter('id', $id)
                     ->getQuery()->execute(); 
@@ -120,12 +137,12 @@ class CoreResourcesRepository extends EntityRepository{
         $isDelete = true;
         try{
             $result = $this
-                    ->createQueryBuilder('U')
-                    ->select("O.id,O.role")
+                    ->createQueryBuilder('O')
+                    ->select("O.id,O.resource")
                     ->Where('O.id = :id') 
                     ->setParameter('id', $id)
                     ->getQuery()->getSingleResult(); 
-            if(isset($result['role'])||is_null($result['role'])){
+            if(isset($result['resource'])||is_null($result['resource'])){
                 $isDelete = false;
             }
             return $isDelete;            

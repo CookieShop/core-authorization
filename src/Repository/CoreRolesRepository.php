@@ -27,7 +27,7 @@ class CoreRolesRepository extends EntityRepository{
         return $this->_em->transactional(
             function ($em) use($data) {
                 $CoreRoles = new CoreRoles();
-                $CoreRoles->setRole($data['role']);
+                $CoreRoles->setRole($data->role);
                 $em->persist($CoreRoles); 
                 $em->flush();
                 $id = $CoreRoles->getId();
@@ -59,7 +59,7 @@ class CoreRolesRepository extends EntityRepository{
     {
         return $this->createQueryBuilder('O')
                ->select("O.id,O.role")
-               ->getQuery()->getResult();        
+               ->getQuery()->getResult(); 
     }
     
     /**
@@ -97,7 +97,7 @@ class CoreRolesRepository extends EntityRepository{
                     $currentRepo->createQueryBuilder('o')
                     ->update(CoreRoles::class,'o')
                     ->set('o.role',':role')  
-                    ->setParameter('role', $data['role'])
+                    ->setParameter('role', $data->role)
                     ->where('o.id = :id')
                     ->setParameter('id', $id)
                     ->getQuery()->execute(); 
@@ -116,7 +116,7 @@ class CoreRolesRepository extends EntityRepository{
         $isDelete = true;
         try{
             $result = $this
-                    ->createQueryBuilder('U')
+                    ->createQueryBuilder('O')
                     ->select("O.id,O.role")
                     ->Where('O.id = :id') 
                     ->setParameter('id', $id)
