@@ -28,8 +28,8 @@ class CorePermissionsRepository extends EntityRepository{
     {       
         return $this->_em->transactional(
             function ($em) use($data) {
-                $role = $this->em->getReference(CoreRoles::class, $data->roleid);
-                $resource = $this->em->getReference(
+                $role = $em->getReference(CoreRoles::class, $data->roleid);
+                $resource = $em->getReference(
                         CoreResources::class, $data->resourceid);            
                 $CorePermissions = new CorePermissions();
                 $CorePermissions->setRole($role);
