@@ -14,6 +14,8 @@ namespace Adteam\Core\Authorization\Repository;
  * @author dev
  */
 use Doctrine\ORM\EntityRepository;
+use Adteam\Core\Authorization\Entity\CoreRoles;
+use Adteam\Core\Authorization\Entity\CoreResources;
 use Adteam\Core\Authorization\Entity\CorePermissions;
 
 class CorePermissionsRepository extends EntityRepository{
@@ -26,9 +28,12 @@ class CorePermissionsRepository extends EntityRepository{
     {       
         return $this->_em->transactional(
             function ($em) use($data) {
+                $role = $this->em->getReference(CoreRoles::class, $data->roleid);
+                $resource = $this->em->getReference(
+                        CoreResources::class, $data->resourceid);            
                 $CorePermissions = new CorePermissions();
-                $CorePermissions->setRole($data->roleid);
-                $CorePermissions->setResource($data->resourceid);
+                $CorePermissions->setRole($role);
+                $CorePermissions->setResource($resource);
                 $CorePermissions->setPermission($data->permission);                    
                 $em->persist($CorePermissions); 
                 $em->flush();
