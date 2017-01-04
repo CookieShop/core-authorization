@@ -129,5 +129,12 @@ class CoreRolesRepository extends EntityRepository{
             throw new \InvalidArgumentException(
                         'Entity not found.'); 
         }
-    }     
+    }  
+    
+    public function getRoles()
+    {
+        return $this
+                ->createQueryBuilder('U')->select('U.id, U.role')->getQuery()
+                ->getArrayResult();
+    }
 }

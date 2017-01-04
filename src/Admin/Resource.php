@@ -46,9 +46,7 @@ class Resource
     {
         $config = $this->service->get('config');
         $whiteListRouter =$config['adteam_core_authorization']
-                ['white_list_router'];
-        $routerPublic =$config['adteam_core_authorization']
-                ['router_public'];        
+                ['white_list_router'];      
         $entites = [];
         foreach ($whiteListRouter as $router){            
             if(isset($router)){
@@ -95,8 +93,9 @@ class Resource
     {
         $isPublic = false;
         $config = $this->service->get('config');
-        $routerPublic =$config['adteam_core_authorization']
-                ['router_public'];   
+        $routerPublic =isset($config['adteam_core_authorization']
+                ['router_public'])?$config['adteam_core_authorization']
+                ['router_public']:[];   
         foreach ($routerPublic as $item){
             if($item['resource']===$resource['resource']
                     &&$item['method']===$resource['methodhttp']){ 

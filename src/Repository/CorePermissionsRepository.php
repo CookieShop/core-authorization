@@ -145,4 +145,14 @@ class CorePermissionsRepository extends EntityRepository{
                         'Entity not found.'); 
         }
     } 
+    
+    public function getPermissions()
+    {
+        return $this
+            ->createQueryBuilder('P')->select('P.id, R.id as roleId, RE.id as '.
+                    'resourceId, P.permission, RE.methodhttp, RE.resource')
+            ->innerJoin('P.role', 'R')
+            ->innerJoin('P.resource', 'RE')
+            ->getQuery()->getArrayResult();        
+    }
 }

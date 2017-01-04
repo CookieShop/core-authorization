@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * OauthUsers
  *
  * @ORM\Table(name="oauth_users", uniqueConstraints={@ORM\UniqueConstraint(name="AK_username", columns={"username"}), @ORM\UniqueConstraint(name="AK_email", columns={"email"})}, indexes={@ORM\Index(name="role_id", columns={"role_id"}), @ORM\Index(name="oauth_users_ibfk_2", columns={"created_by_id"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Adteam\Core\Authorization\Repository\OauthUsersRepository")
  */
 class OauthUsers
 {
@@ -141,9 +141,16 @@ class OauthUsers
     private $modifiedAt;
 
     /**
-     * @var \Adteam\Core\Authorization\Entity\CoreRoles
+     * @var \DateTime
      *
-     * @ORM\ManyToOne(targetEntity="Adteam\Core\Authorization\Entity\CoreRoles")
+     * @ORM\Column(name="deleted_at", type="datetime", precision=0, scale=0, nullable=true, unique=false)
+     */
+    private $deletedAt;
+
+    /**
+     * @var \Application\Entity\CoreRoles
+     *
+     * @ORM\ManyToOne(targetEntity="Application\Entity\CoreRoles")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="role_id", referencedColumnName="id", nullable=true)
      * })
@@ -151,15 +158,21 @@ class OauthUsers
     private $role;
 
     /**
-     * @var \Adteam\Core\Authorization\Entity\OauthUsers
+     * @var \Application\Entity\OauthUsers
      *
-     * @ORM\ManyToOne(targetEntity="Adteam\Core\Authorization\Entity\OauthUsers")
+     * @ORM\ManyToOne(targetEntity="Application\Entity\OauthUsers")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="created_by_id", referencedColumnName="id", nullable=true)
      * })
      */
     private $createdBy;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Application\Entity\CoreCedis", mappedBy="users")
+     */
+    protected $cedis;
 
     /**
      * Get id
@@ -580,13 +593,37 @@ class OauthUsers
     }
 
     /**
-     * Set role
+     * Set deletedAt
      *
-     * @param \Adteam\Core\Authorization\Entity\CoreRoles $role
+     * @param \DateTime $deletedAt
      *
      * @return OauthUsers
      */
-    public function setRole(\Adteam\Core\Authorization\Entity\CoreRoles $role = null)
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get deletedAt
+     *
+     * @return \DateTime
+     */
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
+
+    /**
+     * Set role
+     *
+     * @param \Application\Entity\CoreRoles $role
+     *
+     * @return OauthUsers
+     */
+    public function setRole(\Application\Entity\CoreRoles $role = null)
     {
         $this->role = $role;
 
@@ -596,7 +633,7 @@ class OauthUsers
     /**
      * Get role
      *
-     * @return \Adteam\Core\Authorization\Entity\CoreRoles
+     * @return \Application\Entity\CoreRoles
      */
     public function getRole()
     {
@@ -606,11 +643,11 @@ class OauthUsers
     /**
      * Set createdBy
      *
-     * @param \Adteam\Core\Authorization\Entity\OauthUsers $createdBy
+     * @param \Application\Entity\OauthUsers $createdBy
      *
      * @return OauthUsers
      */
-    public function setCreatedBy(\Adteam\Core\Authorization\Entity\OauthUsers $createdBy = null)
+    public function setCreatedBy(\Application\Entity\OauthUsers $createdBy = null)
     {
         $this->createdBy = $createdBy;
 
@@ -620,11 +657,38 @@ class OauthUsers
     /**
      * Get createdBy
      *
-     * @return \Adteam\Core\Authorization\Entity\OauthUsers
+     * @return \Application\Entity\OauthUsers
      */
     public function getCreatedBy()
     {
         return $this->createdBy;
     }
-}
 
+    /**
+     * @return mixed
+     */
+    public function getCedis()
+    {
+        return $this->cedis;
+    }
+
+    /**
+     * @param mixed $cedis
+     *
+     * @return OauthUsers
+     */
+    public function addCedis($cedis)
+    {
+        $this->cedis[] = $cedis;
+
+        return $this;
+    }
+
+    /**
+     * @param CoreCedis $cedis
+     */
+    public function removeCedis($cedis)
+    {
+        $this->cedis->removeElement($cedis);
+    }
+}

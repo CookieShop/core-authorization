@@ -24,20 +24,6 @@ return [
             'adbox.rest.powerbi','adbox.rest.adminroles',
             'adbox.rest.adminresource','adbox.rest.adminpermissions',
             'adbox.rest.adminpermissionsbuildresource'
-        ],
-        'router_public'=>[
-            ['resource'=>'ZF\OAuth2\Controller\Auth::token','method'=>'POST'],
-            ['resource'=>'ZF\OAuth2\Controller\Auth::token','method'=>'GET'],
-            ['resource'=>'ZF\OAuth2\Controller\Auth::revoke','method'=>'POST'],            
-            ['resource'=>'Adbox\V1\Rest\Configpublic\Controller::collection','method'=>'GET'],
-            ['resource'=>'Adbox\V1\Rest\Usersrecovery\Controller::collection','method'=>'POST'],
-            ['resource'=>'Adbox\V1\Rest\Usersreset\Controller::collection','method'=>'POST'],
-            ['resource'=>'Adbox\V1\Rest\Users\Controller::collection','method'=>'POST'],
-            ['resource'=>'Adbox\V1\Rest\Banners\Controller::collection','method'=>'GET'],
-            ['resource'=>'ZF\Apigility\Documentation\Swagger\SwaggerUi::list','method'=>'GET'],
-            ['resource'=>'ZF\Apigility\Documentation\Swagger\SwaggerUi::show','method'=>'GET'],
-            ['resource'=>'ZF\Apigility\Documentation\Controller::show','method'=>'GET'],
-            ['resource'=>'Adbox\V1\Rest\Powerbi\Controller::collection','method'=>'GET']            
         ]
     ],
     'doctrine' => [

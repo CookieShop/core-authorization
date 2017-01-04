@@ -151,4 +151,12 @@ class CoreResourcesRepository extends EntityRepository{
                         'Entity not found.'); 
         }
     } 
+    
+    public function getResource()
+    {
+        return $this
+                ->createQueryBuilder('U')
+                ->select('U.id, U.resource, U.methodhttp')
+                ->getQuery()->getArrayResult();        
+    }
 }
