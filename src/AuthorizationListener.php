@@ -139,7 +139,7 @@ class AuthorizationListener {
             $username = isset($identity['user_id'])?$identity['user_id']:'';
         }
         
-        if(!is_null($json)){
+        if(!is_null($json)&&isset($json['username'])){
             $username = isset($json['username'])?$json['username']:'';
         }
         return $username;
