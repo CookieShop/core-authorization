@@ -65,6 +65,9 @@ class AuthorizationListener {
     {
         $username = $this->getUsername();
         $role = $this->getIdentityRole($username);
+        if(is_null($role)){
+            return false;
+        }        
         $resource = $this->getCurrentResource();
         $userenabled = $this->hasUserEnabled();
         if(!$userenabled){
