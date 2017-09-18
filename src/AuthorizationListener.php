@@ -242,7 +242,7 @@ class AuthorizationListener {
     private function getConfig()
     {
         $config = $this->getServiceManager()->get('config');
-        $localAppConfigFilename = $config['path'].
+        $localAppConfigFilename = $config['adteam_core_authorization']['path'].
                 '/config/autoload/local.php';
         if (is_readable($localAppConfigFilename)) {            
             $config = ArrayUtils::merge($config, require($localAppConfigFilename));
