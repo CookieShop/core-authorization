@@ -148,9 +148,9 @@ class OauthUsers
     private $deletedAt;
 
     /**
-     * @var \Application\Entity\CoreRoles
+     * @var \Adteam\Core\Authorization\Entity\CoreRoles
      *
-     * @ORM\ManyToOne(targetEntity="Application\Entity\CoreRoles")
+     * @ORM\ManyToOne(targetEntity="Adteam\Core\Authorization\Entity\CoreRoles")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="role_id", referencedColumnName="id", nullable=true)
      * })
@@ -158,9 +158,9 @@ class OauthUsers
     private $role;
 
     /**
-     * @var \Application\Entity\OauthUsers
+     * @var \Adteam\Core\Authorization\Entity\OauthUsers
      *
-     * @ORM\ManyToOne(targetEntity="Application\Entity\OauthUsers")
+     * @ORM\ManyToOne(targetEntity="Adteam\Core\Authorization\Entity\OauthUsers")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="created_by_id", referencedColumnName="id", nullable=true)
      * })
@@ -170,7 +170,7 @@ class OauthUsers
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Application\Entity\CoreCedis", mappedBy="users")
+     * @ORM\ManyToMany(targetEntity="Adteam\Core\Authorization\Entity\CoreCedis", mappedBy="users")
      */
     protected $cedis;
 
@@ -619,11 +619,11 @@ class OauthUsers
     /**
      * Set role
      *
-     * @param \Application\Entity\CoreRoles $role
+     * @param \Adteam\Core\Authorization\Entity\CoreRoles $role
      *
      * @return OauthUsers
      */
-    public function setRole(\Application\Entity\CoreRoles $role = null)
+    public function setRole(\Adteam\Core\Authorization\Entity\CoreRoles $role = null)
     {
         $this->role = $role;
 
@@ -633,7 +633,7 @@ class OauthUsers
     /**
      * Get role
      *
-     * @return \Application\Entity\CoreRoles
+     * @return \Adteam\Core\Authorization\Entity\CoreRoles
      */
     public function getRole()
     {
@@ -643,11 +643,11 @@ class OauthUsers
     /**
      * Set createdBy
      *
-     * @param \Application\Entity\OauthUsers $createdBy
+     * @param \Adteam\Core\Authorization\Entity\OauthUsers $createdBy
      *
      * @return OauthUsers
      */
-    public function setCreatedBy(\Application\Entity\OauthUsers $createdBy = null)
+    public function setCreatedBy(\Adteam\Core\Authorization\Entity\OauthUsers $createdBy = null)
     {
         $this->createdBy = $createdBy;
 
@@ -657,7 +657,7 @@ class OauthUsers
     /**
      * Get createdBy
      *
-     * @return \Application\Entity\OauthUsers
+     * @return \Adteam\Core\Authorization\Entity\OauthUsers
      */
     public function getCreatedBy()
     {
