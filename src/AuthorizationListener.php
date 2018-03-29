@@ -128,20 +128,24 @@ class AuthorizationListener {
         $mvcAuthEvent = $this->mvcAuthEvent;
         $identity = $mvcAuthEvent->getIdentity()
                 ->getAuthenticationIdentity();
+        
         $mvcEvent = $mvcAuthEvent->getMvcEvent();
         $params  = $mvcEvent->getRequest()->getPost()->toArray();
         $json = $this->getUserNameFromStringJson();        
         if(count($params)>0){
             $username = isset($params['username'])?$params['username']:'';
+            return $username;
         }
         
         if(!is_null($identity)){
             $username = isset($identity['user_id'])?$identity['user_id']:'';
+            return $username;
         }
-        
         if(!is_null($json)&&isset($json['username'])){
             $username = isset($json['username'])?$json['username']:'';
+            return $username;
         }
+        
         return $username;
     }
 
